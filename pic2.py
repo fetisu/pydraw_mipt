@@ -1,10 +1,39 @@
 from graph import *
+import random
+
 windowSize(635, 898)
 canvasSize(635, 898)
+
+starters = []
+
+m = []
+for i in range(898):
+    m.append(random.randint(-7, 7))
+
+
 def rect(x1, y1, x2, y2, r, g, b):
-    penColor(r, g, b)
-    brushColor(r, g, b)
-    rectangle(x1, y1, x2, y2)
+    if x1 == 0 and y1 < 400:
+        starters.append([r, g, b])
+    a = [r, g, b]
+    if a in starters:
+        for i in range(y1, y2):
+            if b < g:
+                b, g = g, b
+            if r == 33 and g == 33 and b == 120:
+                b -= 30
+                r += 60
+            b = b + m[i]
+            if b < 40:
+                b += 10
+            elif b > 210:
+                b -= 10
+            penColor(r, g, b)
+            brushColor(r, g, b)
+            rectangle(635 - x1, i-2, 635 - x2, i + 1)
+    else:
+        penColor(r, g, b)
+        brushColor(r, g, b)
+        rectangle(635 - x1, y1, 635 - x2, y2)
 
 
 rect(0, 0, 634, 91, 33, 33, 120)
